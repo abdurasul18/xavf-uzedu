@@ -1,0 +1,19 @@
+.c-popover {
+    &.n-popover:not(.n-popover--raw):not(.n-popover--scrollable):not(.n-popover--show-header-or-footer) {
+        padding: 12px;
+        border-radius: 16px;
+        background: $main;
+    }
+}
+
+
+.v-toast {
+    z-index: 99999;
+}
+
+.c-select {
+    .n-base-selection {
+        padding: 2px;
+        border-radius: 12px;
+    } 
+}

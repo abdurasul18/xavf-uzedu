@@ -1,0 +1,83 @@
+$main : #19191F;
+$secondary : #F2F3F5;
+
+@font-face {
+    font-family: Golos;
+    src: url('/font/GolosText-Medium.ttf');
+}
+
+@font-face {
+    font-family: GolosThin;
+    src: url('/font/GolosText-Regular.ttf');
+}
+
+@font-face {
+    font-family: GolosBold;
+    src: url('/font/GolosText-Bold.ttf');
+}
+
+* {
+    font-family: Golos;
+}
+
+body {
+    color: $main;
+}
+
+.bold-text {
+    font-family: GolosBold;
+
+}
+
+.thin-text {
+    font-family: GolosThin;
+
+}
+
+.container-fluid {
+    max-width: 1920px;
+    padding: 0 40px;
+    margin: 0 auto;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1600px;
+    padding: 16px;
+
+    @media (min-width : 1680px) {
+        padding: 0 40px;
+    }
+
+}
+
+
+.success-gradient {
+    background: linear-gradient(90.00deg, rgb(71, 133, 255), rgb(100, 250, 125) 100%), rgb(255, 255, 255);
+}
+
+.v-toast {
+    z-index: 99999999!important;
+}
+
+.c-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 16px 12px 16px;
+    letter-spacing: -2%;
+    border-radius: 40px;
+    background: rgb(255, 255, 255);
+    width: max-content;
+  }
+  .c-button.c-button-dark {
+    background: rgb(25, 25, 31);
+    color: #fff;
+  }
+  .c-button.c-button-secondary {
+    @apply bg-secondary;
+  }
+  .c-button.round {
+    border-radius: 16px;
+  }
