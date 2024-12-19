@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useVuelidate } from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
+import { minLength, required } from "@vuelidate/validators";
 import { DocumentService, ICriterion } from "../../../services/docs";
 import { useToast } from "vue-toast-notification";
 import * as _ from "lodash";
@@ -19,6 +19,7 @@ let form = ref({
   files: [],
   criterionIds: [],
   description: "",
+  inn: "",
 });
 
 const rules = {
@@ -31,6 +32,7 @@ const rules = {
   amount: { required },
   files: {},
   description: { required },
+  inn: { required, minLength: minLength(9) },
 };
 const v$ = useVuelidate(rules, form);
 //
@@ -107,7 +109,7 @@ let acceptShow = ref(false);
         </div>
         <div>
           <div class="mb-2 text-sm">
-            O'rganish o'tkazilgan madaniy obye'kt <span class="text-danger">*</span>
+            O'rganish o'tkazilgan maktab <span class="text-danger">*</span>
           </div>
           <CInput :schema="v$.title" placeholder="" v-model:value="form.title" />
         </div>
@@ -160,6 +162,15 @@ let acceptShow = ref(false);
             v-model:value="form.amount"
           />
         </div>
+        <div>
+          <div class="mb-2 text-sm">INN <span class="text-danger">*</span></div>
+          <CInput
+            v-maska="'#########'"
+            :schema="v$.inn"
+            placeholder=""
+            v-model:value="form.inn"
+          />
+        </div>
       </div>
       <n-checkbox-group v-model:value="form.criterionIds">
         <div class="mt-5 grid gap-4">
@@ -193,9 +204,9 @@ let acceptShow = ref(false);
         <div class="">
           <n-radio-group v-model:value="rate" size="large">
             <n-space vertical>
-              <n-radio style="font-size: 18px;" :value="100" label="Quyi" />
-              <n-radio style="font-size: 18px;"  :value="200" label="O'rtacha" />
-              <n-radio style="font-size: 18px;"  :value="300" label="Yuqori" />
+              <n-radio style="font-size: 18px" :value="100" label="Quyi" />
+              <n-radio style="font-size: 18px" :value="200" label="O'rtacha" />
+              <n-radio style="font-size: 18px" :value="300" label="Yuqori" />
             </n-space>
           </n-radio-group>
         </div>

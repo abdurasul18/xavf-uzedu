@@ -9,7 +9,7 @@ const router = useRouter();
 <template>
   <div class="profile-wrapper grid grid-cols-12 h-screen">
     <div
-      class="menu-wrapper hidden 2xl:flex 2xl:col-span-3 pt-7 px-3 h-full flex-col justify-between"
+      class="menu-wrapper hidden 2xl:flex 2xl:col-span-3 pt-7 px-3 h-full flex-col justify-between bg-[#4c40830d]"
     >
       <ProfileMenu />
     </div>
@@ -57,7 +57,11 @@ const router = useRouter();
 <style lang="scss">
 .menu-link-wrap {
   .router-link-exact-active {
-    @apply bg-secondary;
+    @apply bg-[#4c4083];
+    color: #fff;
+    img {
+      filter: invert(1);
+    }
   }
 }
 // .n-scrollbar-content {

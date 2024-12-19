@@ -55,7 +55,7 @@ function viewDoc(item: IDocument) {
                   <td class="text-left" style="line-height: 1;">№</td>
                   <td class="text-left" style="line-height: 1;">Tashkilot nomi</td>
                   <td class="text-left" style="line-height: 1;">Tekshiruv sanasi</td>
-                  <td class="text-left" style="line-height: 1;">Yetkazilgan zararu miqdori (m3)</td>
+                  <td class="text-left" style="line-height: 1;">Yetkazilgan zarar miqdori (m3)</td>
                   <td class="text-left" style="line-height: 1;">Hudud</td>
                   <td class="text-left" style="line-height: 1;">Buyruq</td>
                   <td class="text-left" style="line-height: 1;">Xavf darajasi</td>

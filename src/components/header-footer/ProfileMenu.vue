@@ -11,13 +11,14 @@ function signOut() {
 <template>
   <div v-bind="$attrs">
     <RouterLink to="/" class="flex items-center mb-10 ml-4">
-      <img src="/img/svg/gerb-dark.svg" alt="" />
+      <img class="w-8" src="/logo.svg" alt="" />
       <div class="ml-3">
-        <div>Агентство Культурного наследия</div>
-        <div class="text-xs thin-text">Республики Узбекистан</div>
+        <div class="text-lg" style="line-height: 1">
+          O‘zbekiston Respublikasi maktabgacha va maktab ta'limi vazirligi
+        </div>
       </div>
     </RouterLink>
-    <ul class="max-w-56 menu-link-wrap">
+    <ul class=" menu-link-wrap">
       <li>
         <RouterLink
           to="/dashboard"
@@ -59,7 +60,7 @@ function signOut() {
   <a
     href="javascript:void(0)"
     @click="signOut"
-    class="max-w-56 flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-4"
+    class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-4"
   >
     <img class="mr-4" src="/img/svg/logout.svg" alt="" />
     <span>{{ $t("actions.logout") }}</span>

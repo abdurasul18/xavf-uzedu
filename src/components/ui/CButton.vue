@@ -90,7 +90,7 @@ let props = defineProps<{
 <style>
 
 .c-button.c-button-dark {
-  background: rgb(25, 25, 31);
+  background: #372b6c;
   color: #fff;
 }
 .c-button.c-button-secondary {
