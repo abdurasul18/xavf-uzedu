@@ -11,39 +11,53 @@ function signOut() {
 <template>
   <div v-bind="$attrs">
     <RouterLink to="/" class="flex items-center mb-10 ml-4">
-      <img class="w-8" src="/logo.svg" alt="" />
-      <div class="ml-3">
-        <div class="text-lg" style="line-height: 1">
-          O‘zbekiston Respublikasi maktabgacha va maktab ta'limi vazirligi
-        </div>
-      </div>
+      <img class="max-w-[220px]" src="/img/logo2.svg" alt="" />
     </RouterLink>
-    <ul class=" menu-link-wrap">
+    <ul class="menu-link-wrap">
       <li>
         <RouterLink
           to="/dashboard"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
           <img class="mr-4" src="/img/svg/dashboard.svg" alt="" />
-          <span>{{ $t("request.dashboard") }}</span>
+          <span>Bosh sahifa</span>
         </RouterLink>
       </li>
+      <li>
+        <RouterLink
+          to="/category"
+          class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
+        >
+          <img class="mr-4" src="/img/svg/stat.svg" alt="" />
+          <span>Ta'lim tashkilotlari turi</span>
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink
+          to="/criterion"
+          class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
+        >
+          <img class="mr-4" src="/img/svg/stat.svg" alt="" />
+          <span>Kriteriyalar</span>
+        </RouterLink>
+      </li>
+      <li>
+        <RouterLink
+          to="/organization"
+          class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
+        >
+          <img class="mr-4" src="/img/svg/stat.svg" alt="" />
+          <span>Ta'lim tashkilotlari</span>
+        </RouterLink>
+      </li>
+
       <li>
         <RouterLink
           to="/docs"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
           <img class="mr-4" src="/img/svg/stat.svg" alt="" />
-          <span>Hujjatlar</span>
-        </RouterLink>
-      </li>
-      <li>
-        <RouterLink
-          to="/docs/create"
-          class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
-        >
-          <img class="mr-4" src="/img/svg/arrow-round.svg" alt="" />
-          <span>Hujjatlar yaratish</span>
+          <span>Foydalanuvchilar</span>
         </RouterLink>
       </li>
       <li>

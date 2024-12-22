@@ -32,11 +32,13 @@ let currentNaiveLocale = computed<{
     :locale="currentNaiveLocale?.locale"
     :date-locale="currentNaiveLocale?.dateLocale"
   >
-    <n-message-provider>
-      <n-notification-provider placement="bottom-right">
-        <RouterView />
-      </n-notification-provider>
-    </n-message-provider>
+    <n-modal-provider>
+      <n-message-provider>
+        <n-notification-provider placement="bottom-right">
+          <RouterView />
+        </n-notification-provider>
+      </n-message-provider>
+    </n-modal-provider>
   </n-config-provider>
 </template>
 

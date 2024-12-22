@@ -38,28 +38,27 @@ async function success() {
 }
 </script>
 <template>
-  <div class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="flex w-3/4 max-w-[1200px] h-[600px] bg-white shadow-lg rounded-lg overflow-hidden">
+  <div class="bg-gray-100 px-4 xl:px-0 flex items-center justify-center h-screen">
+    <div
+      class="flex w-full xl:w-3/4 max-w-[1200px] h-[600px] bg-white shadow-lg rounded-lg overflow-hidden"
+    >
       <!-- Left Side: Login Form -->
-      <div class="w-1/2 p-8 flex flex-col justify-center">
+      <div class="xl:w-1/2 p-8 flex flex-col justify-center">
         <div class="flex mb-12 gap-4">
-          <img class="w-20" src="/logo.svg" />
-          <h2 class="text-3xl font-bold text-gray-700">
-            O‘zbekiston Respublikasi maktabgacha va maktab ta'limi vazirligi
-          </h2>
+          <img src="/img/logo2.svg" />
         </div>
         <div class="space-y-4">
           <!-- Username -->
           <div>
             <label for="username" class="block text-sm font-medium text-gray-600"
-              >Username</label
+              >Foydalanuvchi nomi</label
             >
             <CInput v-model:value="form.username" :schema="v$.username" />
           </div>
           <!-- Password -->
           <div>
             <label for="password" class="block text-sm font-medium text-gray-600"
-              >Password</label
+              >Parol</label
             >
             <CInput
               v-model:value="form.password"
@@ -77,14 +76,14 @@ async function success() {
             @click="success"
             style="width: 100%"
             dark
-            >{{ $t("actions.login") }}</CButton
+            >Kirish</CButton
           >
         </div>
       </div>
 
       <!-- Right Side: Image -->
       <div
-        class="w-1/2 bg-cover bg-center"
+        class="hidden xl:block w-1/2 bg-cover bg-center"
         style="background-image: url('/notebook.png')"
       >
         <div class="flex items-center justify-center h-full bg-blue-900 bg-opacity-50">

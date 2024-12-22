@@ -57,7 +57,7 @@ body {
 }
 
 .v-toast {
-    z-index: 99999999!important;
+    z-index: 99999999 !important;
 }
 
 .c-button {
@@ -70,14 +70,106 @@ body {
     border-radius: 40px;
     background: rgb(255, 255, 255);
     width: max-content;
-  }
-  .c-button.c-button-dark {
+}
+
+.c-button.c-button-dark {
     background: rgb(25, 25, 31);
     color: #fff;
-  }
-  .c-button.c-button-secondary {
+}
+
+.c-button.c-button-secondary {
     @apply bg-secondary;
-  }
-  .c-button.round {
+}
+
+.c-button.round {
     border-radius: 16px;
-  }
+}
+
+.base-table {
+    @apply w-full text-sm;
+    border-collapse: collapse;
+
+    thead {
+        @apply text-left;
+
+        tr {
+            th {
+                @apply bg-grey-50 font-semibold border border-grey-100 px-3 py-4;
+            }
+        }
+    }
+
+    td,
+    th {
+        @apply border border-grey-100 px-3 py-4;
+    }
+
+    tbody {
+        // tr:hover {
+        //     @apply bg-grey-50;
+        // }
+
+    }
+}
+
+// 
+// 
+.c-table {
+    @apply w-full border-collapse;
+
+    th {
+        @apply bg-grey-50;
+    }
+
+    td,
+    th {
+        @apply border border-grey-100 px-3 py-4 text-left;
+    }
+
+    tr:hover {
+        @apply bg-blue-50 bg-opacity-50;
+    }
+
+    &.no-hoverable tr {
+        @apply bg-transparent;
+    }
+    &.small td {
+        @apply px-2 py-[4px];
+    }
+
+    .action {
+        border-right: 0;
+        border-left: 0;
+        padding-left: 0;
+        padding-right: 36px;
+    }
+
+    .table-filter {
+        &:hover {
+            @apply bg-white;
+        }
+
+        td {
+            @apply border border-grey-100 p-[6px];
+        }
+    }
+
+    .actions {
+        text-align: right !important;
+        border-left: none;
+        
+    }
+    .no-border-r {
+        border-right: none;
+    }
+    &.action-mode {
+        td:last-child, th:last-child {
+            text-align: right !important;
+            border-left: none;
+        }
+        td:nth-last-child(2), th:nth-last-child(2) {
+            border-right: none;
+        }
+
+    }
+}

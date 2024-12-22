@@ -1,103 +1,64 @@
 <script lang="ts" setup>
-let props = defineProps<{
-  to?: string;
-  dark?: boolean;
-  secondary?: boolean;
-  loading?: boolean;
-}>();
+import { IconName } from "./CIcon.vue";
+
+let props = withDefaults(
+  defineProps<{
+    type?: "primary" | "info" | "success" | "warning" | "error" | "default";
+    loading?: boolean;
+    ghost?: boolean;
+    icon?: IconName;
+    size?: "small" | "medium" | "large";
+  }>(),
+  {
+    type: "info",
+    ghost: false,
+    size: "medium",
+  }
+);
 </script>
 <template>
-  <button
-    v-if="!props.to"
-    class="c-button"
-    :class="{ 'c-button-dark': props.dark, 'c-button-secondary': props.secondary }"
-    v-bind="$attrs"
-    :disabled="props.loading"
-  >
-    <svg
-      v-if="loading"
-      class="mr-2 w-8"
-      version="1.1"
-      id="loader-1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      x="0px"
-      y="0px"
-      width="40px"
-      height="40px"
-      viewBox="0 0 50 50"
-      style="enable-background: new 0 0 50 50"
-      xml:space="preserve"
-    >
-      <path
-        fill="#000"
-        d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
-      >
-        <animateTransform
-          attributeType="xml"
-          attributeName="transform"
-          type="rotate"
-          from="0 25 25"
-          to="360 25 25"
-          dur="0.6s"
-          repeatCount="indefinite"
-        />
-      </path>
-    </svg>
+  <n-button class="base-button" :class="[props.size]" v-bind="props">
+    <CIcon v-if="props.icon" :name="props.icon" class="mr-2" />
     <slot></slot>
-  </button>
-  <RouterLink
-    v-else
-    :to="props.to"
-    class="c-button"
-    :class="{ 'c-button-dark': props.dark, 'c-button-secondary': props.secondary }"
-    v-bind="$attrs"
-
-  >
-    <svg
-      v-if="loading"
-      class="mr-2 w-8"
-      version="1.1"
-      id="loader-1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      x="0px"
-      y="0px"
-      width="40px"
-      height="40px"
-      viewBox="0 0 50 50"
-      style="enable-background: new 0 0 50 50"
-      xml:space="preserve"
-    >
-      <path
-        fill="#000"
-        d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z"
-      >
-        <animateTransform
-          attributeType="xml"
-          attributeName="transform"
-          type="rotate"
-          from="0 25 25"
-          to="360 25 25"
-          dur="0.6s"
-          repeatCount="indefinite"
-        />
-      </path>
-    </svg>
-    <slot></slot>
-  </RouterLink>
+  </n-button>
 </template>
-<style>
-
-.c-button.c-button-dark {
-  background: #372b6c;
-  color: #fff;
-}
-.c-button.c-button-secondary {
-  @apply bg-secondary;
-}
-.c-button[disabled] {
-  opacity: 0.7;
-  cursor: not-allowed;
+<style lang="scss">
+.base-button {
+  padding: 28px;
+  border-radius: 10px;
+  &.n-button--ghost {
+    .n-button__border {
+      border: 1px solid #d7d9e0 !important;
+    }
+  }
+  .n-button__content {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  path, circle {
+    stroke: var(--n-text-color-focus) !important;
+  }
+  &:not(.n-button--disabled):focus {
+    path, circle {
+      stroke: var(--n-text-color-focus) !important;
+    }
+  }
+  // medium
+  &.medium {
+    padding: 24px;
+    .n-button__content {
+      font-size: 14px;
+    }
+  }
+  // small
+  &.small {
+    padding: 20px;
+    .n-button__content {
+      font-size: 12px;
+      svg {
+        width: 16px!important;
+      }
+    }
+  }
 }
 </style>

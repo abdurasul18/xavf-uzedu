@@ -15,5 +15,59 @@
     .n-base-selection {
         padding: 2px;
         border-radius: 12px;
-    } 
+    }
+}
+
+.confirm-card {
+    border-radius: 16px;
+}
+
+.c-tabs {
+
+    // width: max-content;
+    .n-tabs-pane-wrapper {
+        display: none;
+    }
+
+    .n-tabs-nav {
+        height: 48px;
+    }
+
+    .n-tabs-tab__label {
+        font-size: 14px;
+    }
+
+    .n-tabs-rail {
+        background: #fff;
+        padding: 6px;
+        border-radius: 8px;
+        border: 1px solid #ededf1 !important;
+    }
+
+    .n-tabs-capsule {
+        background: #f6f7f9 !important;
+        border: 1px solid #ededf1 !important;
+        box-shadow: none !important;
+        border-radius: 8px !important;
+    }
+
+    &.full-tab {
+        width: 100%;
+
+        .n-tabs-tab-wrapper {
+            width: auto;
+            flex-grow: 1 !important;
+        }
+    }
+
+    .n-tabs-tab-wrapper {
+
+        // width: max-content;
+        // flex-grow:0!important;
+        // flex-basis: 0!important;
+        .n-tabs-tab {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
 }

@@ -90,7 +90,7 @@ let acceptShow = ref(false);
       <AppTitle class="text-3xl mb-3">Dalolatnoma yaratish</AppTitle>
     </div>
     <div class="pb-7 border-b border-secondary">
-      <div class="grid grid-cols-3 mt-5 gap-5">
+      <div class="grid md:grid-cols-3 mt-5 gap-5">
         <div>
           <div class="mb-2 text-sm">
             {{ $t("field.region") }} <span class="text-danger">*</span>
@@ -139,7 +139,7 @@ let acceptShow = ref(false);
             :schema="v$.order_date"
           />
         </div>
-        <div class="col-span-3">
+        <div class="col-span-full">
           <div class="mb-2 text-sm">
             O'rganish o'tkazuvchilar<span class="text-danger">*</span>
           </div>

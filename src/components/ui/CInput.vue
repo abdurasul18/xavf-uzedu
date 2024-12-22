@@ -12,7 +12,7 @@ let props = withDefaults(
 </script>
 <template>
   <n-input
-    class="c-input"
+    class="c-input py-1"
     size="large"
     round
     clearable

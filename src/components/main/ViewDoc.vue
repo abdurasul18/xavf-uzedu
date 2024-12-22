@@ -29,11 +29,17 @@ async function view(key: string) {
 defineExpose({
   view,
 });
+let width = window.innerWidth > 1000 ? 1000 : window.innerWidth;
 </script>
 <template>
-  <Component :is="pageMode ? 'div' : 'n-drawer'" :width="1000" v-model:show="show">
+  <Component :is="pageMode ? 'div' : 'n-drawer'" :width="width" v-model:show="show">
     <n-card class="h-screen">
-      <template #header> {{ document?.title }} </template>
+      <template #header>
+        <div class="flex justify-between">
+          {{ document?.title }}
+          <n-button type="error" ghost @click="show = false"> Yopish </n-button>
+        </div>
+      </template>
       <n-spin :show="loading">
         <n-tabs type="segment" animated v-model:value="tabID">
           <n-tab-pane name="document" tab="Hujjat">

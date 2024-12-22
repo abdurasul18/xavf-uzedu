@@ -24,7 +24,7 @@ async function getData() {
     data.value = res.data.data.map((el: any) => {
       return {
         ...el,
-        count: el["count(*)"] || el.count,
+        count: +el.count,
       };
     });
     keyIndex.value++;
@@ -60,7 +60,7 @@ let chartOpt2 = computed(() => {
   let lev1 = data.value.find((el) => el.rate == 100)?.count || 0;
   let lev2 = data.value.find((el) => el.rate == 200)?.count || 0;
   let lev3 = data.value.find((el) => el.rate == 300)?.count || 0;
-  return generateHighChartColumnOpt("Stat", labels, [lev1, lev2, lev3]);
+  return generateHighChartColumnOpt("", labels, [lev1, lev2, lev3]);
 });
 onMounted(() => {
   getData();
@@ -68,8 +68,8 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <AppTitle>Статистика</AppTitle>
-    <div class="grid grid-cols-4 gap-3">
+    <AppTitle>Statistika</AppTitle>
+    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-3">
       <div
         class="rounded-[20px] h-[136px] flex flex-col justify-between p-5 bg-success bg-opacity-10"
       >
@@ -117,18 +117,17 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="mt-12 grid grid-cols-2 gap-4">
+    <div class="mt-12 grid md:grid-cols-2 gap-4">
       <n-card class="" :bordered="true">
-        <Chart :options="chartOpt" :key="keyIndex"></Chart>
+        <div class="flex justify-center"><Chart :options="chartOpt" :key="keyIndex"></Chart></div>
       </n-card>
       <n-card class="" :bordered="true">
-        <Chart :options="chartOpt2" :key="keyIndex"></Chart>
+        <div class="flex justify-center"><Chart :options="chartOpt2" :key="keyIndex"></Chart></div>
       </n-card>
     </div>
   </div>
 </template>
 <style lang="scss">
-
 .highcharts-credits {
   display: none;
 }

@@ -29,6 +29,7 @@ onMounted(getList);
     value-field="id"
     label-field="name"
     class="c-select"
+    size="large"
     :status="schema?.$error ? 'error' : ''"
     v-bind="$attrs"
   />
