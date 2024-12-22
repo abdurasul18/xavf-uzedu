@@ -10,7 +10,12 @@ export function createQuery(data: any) {
   if (!data || typeof data != 'object') return ''
   let query = ''
   for (const key in data) {
-    query += `&${key}=${data[key]}`
+    if (key == 'per_page') {
+  query += `&per-page=${data[key]}`
+    }
+    else {
+      query += `&${key}=${data[key]||''}`
+    }
   }
   if (query.startsWith('&')) query = query.substring(1)
   return query
@@ -115,7 +120,7 @@ const ApiService = {
             throw error
           } else {
             console.log(error);
-            
+
             let message = Object.values(error.response.data.errors || {})[0] || error.response.data.message || error.response.data.error || error.response.data || 'Something went wrong'
 
             toast.error(message)

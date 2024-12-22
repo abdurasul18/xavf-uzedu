@@ -23,6 +23,7 @@ let props = withDefaults(
 </template>
 <style lang="scss">
 .c-input {
+  padding-top: 0;
   &.n-input.n-input--round {
     border-radius: 12px;
   }

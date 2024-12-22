@@ -75,7 +75,7 @@ async function deleteItem(item: ICategory) {
         </table>
       </CLoader>
     </div>
-    <CModal2 v-model:show="addShow" class="max-w-[400px]" title="Qo'shish">
+    <CModal2 v-model:show="addShow" class="max-w-[400px]" :title="mode=='create'? 'Qoʻshish' : 'Tahrirlash'">
       <AddUpCategory
         @close="addShow = false"
         @success="

@@ -1,12 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import ApiService, { createQuery } from "./api"
-export interface IUserLogin {
-  branch_id:string
-  first_name:string
-  id:string
-  last_name:string
-  status:string
-  token:string
+import { IUser } from "./user";
+export interface IUserLogin extends IUser {
+ 
 
 }
 export type IRole = 'applicant' | 'regional_administrator' | 'secretary' | 'council' | 'chairman'

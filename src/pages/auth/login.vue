@@ -38,58 +38,54 @@ async function success() {
 }
 </script>
 <template>
-  <div class="bg-gray-100 px-4 xl:px-0 flex items-center justify-center h-screen">
-    <div
-      class="flex w-full xl:w-3/4 max-w-[1200px] h-[600px] bg-white shadow-lg rounded-lg overflow-hidden"
-    >
-      <!-- Left Side: Login Form -->
-      <div class="xl:w-1/2 p-8 flex flex-col justify-center">
-        <div class="flex mb-12 gap-4">
-          <img src="/img/logo2.svg" />
-        </div>
-        <div class="space-y-4">
-          <!-- Username -->
-          <div>
-            <label for="username" class="block text-sm font-medium text-gray-600"
-              >Foydalanuvchi nomi</label
-            >
-            <CInput v-model:value="form.username" :schema="v$.username" />
-          </div>
-          <!-- Password -->
-          <div>
-            <label for="password" class="block text-sm font-medium text-gray-600"
-              >Parol</label
-            >
-            <CInput
-              v-model:value="form.password"
-              :schema="v$.password"
-              @keyup.enter="success"
-              type="password"
-              show-password-on="click"
-            />
-          </div>
-
-          <!-- Submit Button -->
-          <CButton
-            :loading="loading"
-            :disabled="loading"
-            @click="success"
-            style="width: 100%"
-            dark
-            >Kirish</CButton
-          >
-        </div>
-      </div>
-
-      <!-- Right Side: Image -->
+  <div class="bg-white">
+    <div class="grid grid-cols-12 min-h-screen h-full p-4 sm:p-9">
       <div
-        class="hidden xl:block w-1/2 bg-cover bg-center"
+        class="col-span-7 h-full bg-no-repeat bg-contain hidden xl:block bg-grey-50 rounded-lg"
         style="background-image: url('/notebook.png')"
-      >
-        <div class="flex items-center justify-center h-full bg-blue-900 bg-opacity-50">
-          <h3 class="text-white text-2xl font-semibold text-center px-6">
-            <!-- Empowering Education for a Brighter Future -->
-          </h3>
+      ></div>
+      <div class="col-span-12 xl:col-span-5 flex flex-col justify-between relative p-4 md:p-0 rounded-xl bg-gray-50 md:bg-white">
+       
+        <div class="flex flex-col h-full justify-center">
+          <div class="flex justify-center xl:mt-12">
+            <!-- <img class="max-w-[250px]" src="/img/logo2.svg" /> -->
+          </div>
+          <div class="text-center mt-2 2xl:mt-12">
+            <div class="flex justify-center xl:mt-12">
+              <img class="max-w-[300px]" src="/img/logo2.svg" />
+            </div>
+          </div>
+          <div class="w-full sm:w-[435px] mx-auto mt-7 2xl:mt-14">
+            <div>
+              <p class="mb-2">Foydalanuvchi nomi (login)</p>
+              <CInput
+                :label="$t('field.login')"
+                icon="user"
+                v-model:value="form.username"
+                :schema="v$.username"
+                @keyup.enter="login"
+                :medium="false"
+              />
+            </div>
+            <div class="flex flex-col mt-4 2xl:mt-5">
+              <p class="mb-2">Parol</p>
+              <CInput
+                class=""
+                :label="$t('field.password')"
+                type="password"
+                show-password-on="click"
+                icon="lock"
+                v-model:value="form.password"
+                :schema="v$.password"
+                :medium="false"
+                @keyup.enter="success"
+              >
+              </CInput>
+            </div>
+            <CButton @click="success" :loading="loading" class="mt-5 2xl:mt-14 w-full"
+              >Kirish</CButton
+            >
+          </div>
         </div>
       </div>
     </div>

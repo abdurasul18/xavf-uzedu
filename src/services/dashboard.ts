@@ -1,20 +1,12 @@
 import { AxiosPromise } from "axios"
-import ApiService from "./api"
-export interface IDashboardData {
-    approved:number
-    expired:number
-    in_progress:number
-    rejected:number
-}
+import ApiService, { createQuery } from "./api"
+import { IResponse, QueryType } from "./types"
 export interface IStat {
-    month:number
-    data :IDashboardData
+    rate:number
+    title:string
 }
 export const DashboarService = {
-    getData():AxiosPromise<IDashboardData> {
-        return ApiService.get(`application/application-stats/`)
-    },
-    getStat():AxiosPromise<IStat[]> {
-        return ApiService.get(`application/application-chart-stats/`)
+    getStat(query: any): IResponse<IStat> {
+        return ApiService.get(`organization/statistics-rate?${createQuery(query)}`)
     }
 }

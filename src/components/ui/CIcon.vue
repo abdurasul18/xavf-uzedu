@@ -73,6 +73,7 @@ export type IconName =
   | "focus"
     | "target"
     | "lamp"
+    |"minus"
   ;
 let props = withDefaults(
   defineProps<{

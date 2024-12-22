@@ -7,10 +7,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    2: typeof import('./src/components/ui/CModal copy 2.vue')['default']
     AddUpCategory: typeof import('./src/components/pages/category/AddUpCategory.vue')['default']
+    AddUpCheck: typeof import('./src/components/pages/category/AddUpCheck.vue')['default']
     AddUpCriterion: typeof import('./src/components/pages/criterion/AddUpCriterion.vue')['default']
     AddUpOrganization: typeof import('./src/components/pages/organization/AddUpOrganization.vue')['default']
+    AddUpUser: typeof import('./src/components/pages/category/AddUpUser.vue')['default']
     AppFooter: typeof import('./src/components/header-footer/AppFooter.vue')['default']
     AppFooterProfile: typeof import('./src/components/header-footer/AppFooterProfile.vue')['default']
     AppHeader: typeof import('./src/components/header-footer/AppHeader.vue')['default']
@@ -27,7 +28,6 @@ declare module 'vue' {
     CLoader: typeof import('./src/components/ui/CLoader.vue')['default']
     CModal: typeof import('./src/components/ui/CModal.vue')['default']
     CModal2: typeof import('./src/components/ui/CModal2.vue')['default']
-    copy: typeof import('./src/components/ui/SelectRegion copy.vue')['default']
     CSelect: typeof import('./src/components/ui/CSelect.vue')['default']
     CStatus: typeof import('./src/components/main/CStatus.vue')['default']
     DropFile: typeof import('./src/components/ui/DropFile.vue')['default']
@@ -42,6 +42,6 @@ declare module 'vue' {
     SelectPrice: typeof import('./src/components/ui/SelectPrice.vue')['default']
     SelectRegion: typeof import('./src/components/ui/SelectRegion.vue')['default']
     Signature: typeof import('./src/components/main/Signature.vue')['default']
-    ViewDoc: typeof import('./src/components/main/ViewDoc.vue')['default']
+    UzbekistanSvg: typeof import('./src/components/pages/dashboard/UzbekistanSvg.vue')['default']
   }
 }

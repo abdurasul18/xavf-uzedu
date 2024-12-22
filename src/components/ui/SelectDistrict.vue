@@ -2,7 +2,7 @@
 import { RegionService } from "../../services/region";
 let props = defineProps<{
   schema?: any;
-  regionId: string;
+  regionId: any;
 }>();
 let loading = ref(false);
 let list = ref([]);

@@ -6,7 +6,7 @@ onMounted(getUser);
 let menuShow = ref(false);
 const router = useRouter();
 onMounted(async () => {
-    await router.push("/docs");
+    await router.push("/dashboard");
   
 });
 </script>

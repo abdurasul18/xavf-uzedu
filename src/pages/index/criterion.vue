@@ -5,11 +5,27 @@ import { CriterionService, ICriterion } from "/@src/services/criterion";
 import { confirmDelete } from "/@src/composable/helpers";
 import { toastSuccess } from "/@src/plugins/toast";
 const modal = useModal();
-const { loading, list, fetchData, search, page, per_page } = useApiService<ICriterion>(
-  CriterionService.getList
-);
-onMounted(fetchData);
+const route = useRoute();
 
+let category_id = ref(String(route.query.category_id || ""));
+
+const paramsAdd = computed(() => {
+  return {
+    query: {
+      category_id: category_id.value,
+    },
+  };
+});
+const {
+  loading,
+  list,
+  fetchData,
+  search,
+  page,
+  per_page,
+  total,
+} = useApiService<ICriterion>(CriterionService.getList, paramsAdd);
+onMounted(fetchData);
 let currentItem = ref<ICriterion>();
 let mode = ref<"create" | "update">("create");
 let addShow = ref(false);
@@ -26,13 +42,16 @@ async function deleteItem(item: ICriterion) {
 <template>
   <div>
     <AppTitle> Kriteriyalar </AppTitle>
-    <div class="flex justify-between gap-4 pt-1">
-      <CInput
-        v-model:value="search"
-        size="large"
-        class="max-w-[300px]"
-        placeholder="Qidiruv"
-      />
+    <div class="flex justify-between gap-4 pt-1 flex-col md:flex-row">
+      <div class="flex flex-col md:flex-row gap-2">
+        <CInput
+          v-model:value="search"
+          size="large"
+          class="max-w-[300px]"
+          placeholder="Qidiruv"
+        />
+        <CategoryTab class="pt-1" v-model:value="category_id" size="large" />
+      </div>
       <CButton
         @click="
           addShow = true;
@@ -77,9 +96,21 @@ async function deleteItem(item: ICriterion) {
           </tbody>
           <AppNotFound v-else mode="table" />
         </table>
+        <n-pagination
+          class="mt-2"
+          v-model:page="page"
+          v-model:page-size="per_page"
+          :page-count="Math.ceil(total / per_page)"
+          show-size-picker
+          :page-sizes="[5, 10, 20, 30, 40]"
+        />
       </CLoader>
     </div>
-    <CModal2 v-model:show="addShow" class="max-w-[400px]" title="Qo'shish">
+    <CModal2
+      v-model:show="addShow"
+      class="max-w-[400px]"
+      :title="mode == 'create' ? 'Qoʻshish' : 'Tahrirlash'"
+    >
       <AddUpCriterion
         @close="addShow = false"
         @success="

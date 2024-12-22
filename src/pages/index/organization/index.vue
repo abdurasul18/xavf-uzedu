@@ -6,12 +6,20 @@ import { confirmDelete } from "/@src/composable/helpers";
 import { toastSuccess } from "/@src/plugins/toast";
 const modal = useModal();
 const route = useRoute();
-let category_id = ref(String(route.query.category_id || "") || "");
+let category_id = ref(String(route.query.category_id || ""));
+let name = ref(String(route.query.name || ""));
+let inn = ref(String(route.query.inn || ""));
+let region_id = ref(Number(route.query.region_id || "") || null);
+let district_id = ref(Number(route.query.district_id || "") || null);
 
 let paramsAdd = computed(() => {
   return {
     query: {
       category_id: category_id.value,
+      name: name.value,
+      inn: inn.value,
+      region_id: region_id.value,
+      district_id: district_id.value,
     },
     body: {},
   };
@@ -35,23 +43,45 @@ async function deleteItem(item: IOrganization) {
     toastSuccess();
   }
 }
+
+function getStatusRate(rate: number) {
+  if (!rate) {
+    return;
+  } else if (rate <= 60) {
+    return "success";
+  } else if (rate <= 80) {
+    return "warning";
+  } else {
+    return "error";
+  }
+}
 </script>
 <template>
   <div>
     <AppTitle> Tashkilotlar </AppTitle>
 
-    <div class="flex justify-between gap-4 pt-1">
-      <CategoryTab v-model:value="category_id" />
+    <div class="flex flex-col md:flex-row justify-between gap-4 pt-1">
+      <CategoryTab v-model:value="category_id" size="large" class="pt-1" />
       <CButton
         @click="$router.push(`/organization/add?category_id=${category_id}`)"
         icon="plus"
         >Qo'shish</CButton
       >
     </div>
-    <div class=" mt-5">
+    <div class="grid md:grid-cols-4 mt-2 gap-4">
+      <CInput v-model:value="name" placeholder="Nomi" />
+      <CInput v-model:value="inn" placeholder="INN" />
+      <SelectRegion v-model:value="region_id" placeholder="Viloyat" />
+      <SelectDistrict
+        v-model:value="district_id"
+        :regionId="region_id!"
+        placeholder="Tuman"
+      />
+    </div>
+    <div class="mt-5">
       <CLoader :active="loading">
         <n-scrollbar x-scrollable>
-          <table class="c-table  action-mode">
+          <table class="c-table action-mode">
             <thead>
               <tr>
                 <th>№</th>
@@ -61,11 +91,12 @@ async function deleteItem(item: IOrganization) {
                 <th>Manzil</th>
                 <th>INN</th>
                 <th>Litsenziya</th>
+                <th>Ball</th>
                 <th></th>
               </tr>
             </thead>
             <tbody v-if="list.length">
-              <tr v-for="(item, index) in list">
+              <tr v-for="(item, index) in list" :class="getStatusRate(item.rate)">
                 <td>{{ $paginate(index, page, per_page) }}</td>
                 <td>{{ item.title }}</td>
                 <td>{{ item.region?.name }}</td>
@@ -76,13 +107,33 @@ async function deleteItem(item: IOrganization) {
                   {{ item.license_number }}/{{ item.license_date?.split(" ")?.[0] }}
                 </td>
                 <td>
-                  <div class="flex gap-1 justify-end">
+                  <n-tag v-if="item.rate" round :type="getStatusRate(item.rate)">
+                    <n-number-animation
+                      :from="0"
+                      :to="item.rate"
+                      :active="true"
+                      :precision="0"
+                      locale="ru-RU"
+                    />
+                  </n-tag>
+                </td>
+                <td>
+                  <div class="flex justify-end">
                     <CActionIcon
-                    class="info-svg"
+                      icon="eye"
+                      @click="$router.push(`/organization/${item.id}/detail`)"
+                    />
+                    <CActionIcon
+                      class="info-svg"
                       @click="$router.push(`/organization/update?update_id=${item.id}`)"
                       icon="edit"
                     />
-                    <CActionIcon class="error-svg" @click="deleteItem(item)" type="error" icon="delete" />
+                    <CActionIcon
+                      class="error-svg"
+                      @click="deleteItem(item)"
+                      type="error"
+                      icon="delete"
+                    />
                   </div>
                 </td>
               </tr>
@@ -103,24 +154,35 @@ async function deleteItem(item: IOrganization) {
   </div>
 </template>
 <style lang="scss">
-.my-table {
-  width: 100%;
-  tbody {
-    tr {
-      transition: all 0.3s;
+table {
+  tr {
+    &.success {
+      background-color: #d4edc6;
+      td {
+        // border-color: #65d12b;
+      }
       &:hover {
-        background-color: #f2f3f5;
-        td:first-child {
-          border-radius: 40px 0 0 40px;
-        }
-        td:last-child {
-          border-radius: 0 40px 40px 0;
-        }
+        background-color: #d4edc6;
       }
     }
-  }
-  td {
-    padding: 10px;
+    &.warning {
+      background-color: #f9f9aa;
+      td {
+        // border-color: #ded344;
+      }
+      &:hover {
+        background-color: #f9f9aa;
+      }
+    }
+    &.error {
+      background-color: #fde2e4;
+      td {
+        // border-color: #cb0e1b;
+      }
+      &:hover {
+        background-color: #fde2e4;
+      }
+    }
   }
 }
 </style>

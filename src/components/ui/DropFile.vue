@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 let props = withDefaults(
   defineProps<{
     value: any;
@@ -146,7 +145,9 @@ function getSize(size: number) {
                 </svg>
               </div>
               <div class="text-sm">
-                <div class="font-semibold one-lie">{{ item.name?.substring?.(0,30)+'...' }}</div>
+                <div class="font-semibold one-lie">
+                  {{ item.name?.substring?.(0, 30) + "..." }}
+                </div>
                 <div class="text-grey-500">{{ getSize(item.size) }}</div>
               </div>
             </div>
@@ -168,8 +169,8 @@ function getSize(size: number) {
             </svg>
           </div>
         </div>
-        <n-button @click="addMore" class="w-full mt-4">
-        yuklash
+        <n-button v-if="!notMultiple" @click="addMore" class="w-full mt-4">
+          yuklash
         </n-button>
       </div>
     </div>

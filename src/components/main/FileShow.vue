@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { IFile } from "/@src/services/docs";
+import { IFile } from "/@src/services/organization";
 import { imgFormat, videoFormat } from "/@src/utils/file-formats";
 
 let props = defineProps<{
@@ -7,8 +7,9 @@ let props = defineProps<{
   deletable?: boolean;
 }>();
 let emits = defineEmits(["delete"]);
+const baseUrl = import.meta.env.VITE_API_IMG_URL;
 let extension = computed(() => {
-  return props.data.path.split(".").pop()?.toLowerCase() || "";
+  return props.data.name.split(".").pop()?.toLowerCase() || "";
 });
 let fileType = computed(() => {
   if (imgFormat.includes(extension.value)) {
@@ -31,7 +32,6 @@ function showOrDownload() {
     download();
   }
 }
-let baseUrl = import.meta.env.VITE_API_IMG_URL;
 function download() {
   let link = document.createElement("a") as HTMLAnchorElement;
   link.download = `${props.data.name || "file"}`;
@@ -40,6 +40,14 @@ function download() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+function getSize(size: number) {
+  let i = Math.floor(Math.log(size) / Math.log(1024));
+  return (
+    (size / Math.pow(1024, i)).toFixed(2) * 1 +
+    " " +
+    ["B", "KB", "MB", "GB", "TB"][i]
+  );
 }
 </script>
 <template>
@@ -61,36 +69,30 @@ function download() {
           <n-image v-if="data.path" :src="$withBaseUrl(data.path)" />
         </div>
         <div class="flex items-center justify-center bg-blue-50 w-12 h-12" v-else>
-          <img class="cursor-pointer w-10" src="/@src/assets/file.svg" alt="" />
+          <CIcon class="info-svg" name="file" />
         </div>
       </div>
       <div class="text-sm">
         <div class="font-semibold">{{ data.name }}</div>
-        <!-- <div class="text-grey-500">17.38 Kb</div> -->
+        <div class="text-grey-500">{{ getSize(data.size) }}</div>
       </div>
     </div>
     <div class="flex justify-end items-center gap-2">
-      <img
-        @click="download"
-        class="cursor-pointer w-10 border border-grey-100 rounded-full p-2"
-        src="/@src/assets/download.svg"
-        alt=""
-      />
+      <CIconButton icon="download" @click="download" />
+      <CIconButton v-if="deletable" type="error" icon="delete" @click="emits('delete', data.id)" />
     </div>
   </div>
 
-  <n-modal v-model:show="showPdf">
-    <n-card :title="data.name" class="max-w-[800px]" closable @close="showPdf = false">
-      <iframe
-        width="100%"
-        :src="`${$baseUrl}/${data.path}`"
-        style="min-height: 80vh; background-color: #ffffff"
-        frameborder="0"
-        webkitallowfullscreen
-        mozallowfullscreen
-        allowfullscreen
-      />
-    </n-card>
-  </n-modal>
+  <CModal2 class="max-w-[1000px]" v-model:show="showPdf" :title="data.name">
+    <iframe
+      width="100%"
+      :src="`${$baseUrl}/${data.path}`"
+      style="min-height: 80vh; background-color: #ffffff"
+      frameborder="0"
+      webkitallowfullscreen
+      mozallowfullscreen
+      allowfullscreen
+    />
+  </CModal2>
 </template>
 <style lang="scss"></style>

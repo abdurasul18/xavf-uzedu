@@ -5,6 +5,7 @@ const { user } = toRefs(useAuthStore());
 onMounted(getUser);
 let menuShow = ref(false);
 const router = useRouter();
+let width = ref(window.innerWidth);
 </script>
 <template>
   <div class="profile-wrapper grid grid-cols-12 h-screen">
@@ -17,7 +18,8 @@ const router = useRouter();
       class="content-wrapper col-span-12 2xl:col-span-9 h-screen flex flex-col justify-between"
     >
       <div class="flex justify-between items-center p-7">
-        <div class="text-3xl" id="appTitle"></div>
+        <div v-if="width > 768" class="text-3xl" id="appTitle"></div>
+        <div v-else></div>
         <div class="flex justify-end gap-4">
           <div class="flex justify-end items-center shrink-0">
             <div class="text-right">
@@ -35,6 +37,7 @@ const router = useRouter();
       <n-scrollbar class="pb-5">
         <div class="flex flex-col-reverse 2xl:flex-row 2xl:justify-between">
           <div class="px-4 w-full">
+            <div v-if="width < 768" class="text-3xl" id="appTitle"></div>
             <RouterView> </RouterView>
           </div>
         </div>
@@ -56,9 +59,13 @@ const router = useRouter();
 </template>
 <style lang="scss">
 .menu-link-wrap {
-  .router-link-exact-active {
+  .router-link-active {
     @apply bg-[#4c4083];
     color: #fff;
+    path,
+    circle {
+      stroke: #fff !important;
+    }
     img {
       filter: invert(1);
     }

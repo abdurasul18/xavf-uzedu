@@ -49,10 +49,21 @@ async function getUserData() {
             <div class="thin-text mb-1 text-xs">Ismi</div>
             <div>{{ user?.first_name }}</div>
           </div>
-
           <div class="border-b border-secondary pb-3 pt-2">
-            <div class="thin-text mb-1 text-xs">Holati</div>
-            <div>{{ user?.status }}</div>
+            <div class="thin-text mb-1 text-xs">Otasining Ismi</div>
+            <div>{{ user?.middle_name }}</div>
+          </div>
+          <div class="border-b border-secondary pb-3 pt-2">
+            <div class="thin-text mb-1 text-xs">Login</div>
+            <div>{{ user?.username }}</div>
+          </div>
+          <div class="border-b border-secondary pb-3 pt-2">
+            <div class="thin-text mb-1 text-xs">Roli</div>
+            <div>
+              {{
+                user?.role == 100 ? "Admin" : user?.role == 200 ? "Respublika" : "Hudud"
+              }}
+            </div>
           </div>
         </div>
       </div>

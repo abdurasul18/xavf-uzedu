@@ -17,7 +17,7 @@ export function useApiService<T>(apiMethod: (query?: any, body?: any) => IRespon
       query: {
         search: search.value,
         ...filterParams?.value.query,
-        page: page.value - 1,
+        page: page.value,
         per_page: per_page.value,
       },
       body: {

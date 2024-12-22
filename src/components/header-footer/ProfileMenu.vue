@@ -23,40 +23,40 @@ function signOut() {
           <span>Bosh sahifa</span>
         </RouterLink>
       </li>
-      <li>
+      <li v-if="user?.role === 100">
         <RouterLink
           to="/category"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-          <img class="mr-4" src="/img/svg/stat.svg" alt="" />
+         <CIcon class="mr-4" name="category"/>
           <span>Ta'lim tashkilotlari turi</span>
         </RouterLink>
       </li>
-      <li>
+      <li v-if="user?.role === 100">
         <RouterLink
           to="/criterion"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-          <img class="mr-4" src="/img/svg/stat.svg" alt="" />
+        <CIcon class="mr-4" name="check"/>
           <span>Kriteriyalar</span>
         </RouterLink>
       </li>
-      <li>
+      <li >
         <RouterLink
           to="/organization"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-          <img class="mr-4" src="/img/svg/stat.svg" alt="" />
+        <CIcon class="mr-4" name="department"/>
           <span>Ta'lim tashkilotlari</span>
         </RouterLink>
       </li>
 
-      <li>
+      <li v-if="user?.role === 100"> 
         <RouterLink
-          to="/docs"
+          to="/user"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-          <img class="mr-4" src="/img/svg/stat.svg" alt="" />
+        <CIcon class="mr-4" name="users"/>
           <span>Foydalanuvchilar</span>
         </RouterLink>
       </li>
