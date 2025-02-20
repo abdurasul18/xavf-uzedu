@@ -26,6 +26,7 @@ export interface IOrganization {
         file: IFile
         criterion: ICriterion
     }[]
+    organization_addresses?: { name: string }[]
 }
 
 export interface ICheck {
@@ -54,12 +55,31 @@ export interface IRateHistory {
     file?: IFile
     id: string
 }
+export interface IOrgByInn {
+    document_id: string
+    expiry_date: string
+    name: string
+    pin: string
+    register_id: string
+    register_number: string
+    registration_date: string
+    status: string
+    tin: string
+    type: 2
+    activity_addresses: { address: string }[]
+    activity_types: { id: string, name_en: string, name_ru: string, name_uz: string }[]
+    organization:{
+        name_en: string
+        name_ru: string
+        name_uz: string
+    }
+}
 export const OrganizationService = {
     getList(query?: QueryType): IResponse<IOrganization> {
         return ApiService.get(`organization/index?${createQuery(query)}&expand=category`)
     },
     getById(id: string): AxiosPromise<{ data: IOrganization }> {
-        return ApiService.get(`organization/view?id=${id}&expand=category,organizationCriterions`)
+        return ApiService.get(`organization/view?id=${id}&expand=category,organizationCriterions,organization_addresses`)
     },
     create(data: any) {
         return ApiService.post('organization/create', data)
@@ -88,7 +108,13 @@ export const OrganizationService = {
     rate(data: any) {
         return ApiService.post('organization/rate', data)
     },
-    rateHistory(id: string):IResponse<IRateHistory> {
+    rateHistory(id: string): IResponse<IRateHistory> {
         return ApiService.get(`organization/rate-history?organization_id=${id}`)
-    }
+    },
+    // 
+    getData(tin: string): AxiosPromise<{ data: IOrgByInn[] }> {
+        return ApiService.post(`organization/get-data`, {
+            tin
+        })
+    },
 }

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useVuelidate } from "@vuelidate/core";
 import { minLength, required } from "@vuelidate/validators";
-import { DocumentService, ICriterion } from "../../../services/docs";
 import { useToast } from "vue-toast-notification";
 import * as _ from "lodash";
-import { OrganizationService } from "/@src/services/organization";
+import { IOrgByInn, OrganizationService } from "/@src/services/organization";
+import { convertDateFormat } from "/@src/utils/date";
 let props = defineProps<{
   id?: string;
   mode: "create" | "update";
@@ -44,6 +44,7 @@ let form = ref({
   district_id: "",
   direction_contact: "",
   direction_fio: "",
+  organization_addresses: [{ name: "" }],
 });
 
 const rules = {
@@ -83,7 +84,39 @@ async function send() {
   }
 }
 //
-
+let dataLoading = ref(false);
+let show = ref(false);
+let data = ref<IOrgByInn[]>([]);
+watch(
+  () => form.value.inn,
+  (v) => {
+    if (v.length === 9) {
+      getData();
+    }
+    if (v.length < 9) {
+      show.value = false;
+      data.value = [];
+    }
+  }
+);
+async function getData() {
+  dataLoading.value = true;
+  try {
+    let res = await OrganizationService.getData(form.value.inn);
+    data.value = res.data.data;
+    show.value = true;
+  } finally {
+    dataLoading.value = false;
+  }
+}
+function setData(item: IOrgByInn) {
+  form.value.title = item.name;
+  form.value.address = item.activity_addresses[0].address;
+  form.value.license_date = convertDateFormat(item.registration_date)
+  form.value.license_number = item.register_number;
+  form.value.organization_addresses = item.activity_addresses.map((i) => ({ name: i.address }));
+  show.value = false;
+}
 //
 </script>
 <template>
@@ -96,6 +129,33 @@ async function send() {
         <div class="col-span-full">
           <CategoryTab v-model:value="form.category_id" />
         </div>
+        <div>
+          <div class="mb-2 text-sm">INN <span class="text-danger">*</span></div>
+          <div class="flex gap-2">
+            <n-popover placement="bottom-start" trigger="focus" v-model:show="show" raw>
+              <template #trigger>
+                <CInput
+                  v-maska="'#########'"
+                  :schema="v$.inn"
+                  placeholder=""
+                  v-model:value="form.inn"
+                  :loading="dataLoading"
+                />
+              </template>
+              <n-scrollbar style="max-height: 300px">
+                <n-list hoverable clickable class="max-w-[300px] md:max-w-[500px]">
+                  <n-list-item @click="setData(item)" v-for="item in data">
+                    <div class="font-semibold">{{ item.name }}</div>
+                    <div class="text-sm"> {{ item.activity_types?.map?.(el=>el.name_uz).join(", ") }} </div>
+                  </n-list-item>
+                </n-list>
+              </n-scrollbar>
+            </n-popover>
+
+            <CIconButton icon="info" @click="getData()" :loading="dataLoading" />
+          </div>
+        </div>
+
         <div>
           <div class="mb-2 text-sm">
             Tashkilot nomi <span class="text-danger">*</span>
@@ -120,15 +180,6 @@ async function send() {
             :schema="v$.license_date"
             placeholder=""
             v-model:value="form.license_date"
-          />
-        </div>
-        <div>
-          <div class="mb-2 text-sm">INN <span class="text-danger">*</span></div>
-          <CInput
-            v-maska="'#########'"
-            :schema="v$.inn"
-            placeholder=""
-            v-model:value="form.inn"
           />
         </div>
 
@@ -167,6 +218,30 @@ async function send() {
             placeholder=""
             v-model:value="form.direction_contact"
           />
+        </div>
+        <div class="">
+          <div class="mb-2 text-sm">Faoliyat manzillari</div>
+          <div class="grid gap-4">
+            <div
+              class="flex gap-1"
+              v-for="(item, index) in form.organization_addresses"
+              :key="index"
+            >
+              <CInput class="w-full" placeholder="" v-model:value="item.name" />
+              <CIconButton
+                type="info"
+                v-if="index === form.organization_addresses.length - 1"
+                @click="form.organization_addresses.push({ name: '' })"
+                icon="plus"
+              />
+              <CIconButton
+                v-else-if="form.organization_addresses.length > 1"
+                @click="form.organization_addresses.splice(index, 1)"
+                type="error"
+                icon="delete"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

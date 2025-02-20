@@ -65,6 +65,14 @@ onMounted(() => {
           </div>
         </div>
         <div>
+          <div class="text-grey-500 mb-[2px]">Faoliyat manzillari</div>
+          <div class="font-semibold">
+            <ul>
+              <li v-for="item in data?.organization_addresses">{{ item.name }}</li>
+            </ul>
+          </div>
+        </div>
+        <div>
           <div class="text-grey-500 mb-[2px]">Direktor</div>
           <div class="font-semibold">
             {{ data?.director_fio }}
@@ -78,9 +86,9 @@ onMounted(() => {
         </div>
         <div>
           <div class="text-grey-500 mb-[2px]">Turi</div>
-         <n-tag round>
-          {{ data?.category.name }}
-         </n-tag>
+          <n-tag round>
+            {{ data?.category.name }}
+          </n-tag>
         </div>
       </div>
     </n-card>

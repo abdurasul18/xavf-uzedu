@@ -150,13 +150,9 @@ function setRegion(val: IRegion) {
         </div>
       </div>
       <div class="h-full md:flex flex-col items-center justify-center hidden">
-        <n-scrollbar class="w-full" x-scrollable>
-          <div class="wrap-svg">
             <div style="transform: scale(0.6); margin-top: -80px">
               <UzbekistanSvg @update-region="setRegion" />
             </div>
-          </div>
-        </n-scrollbar>
       </div>
       <n-card class="" :bordered="true">
         <div class="text-xl font-semibold">
@@ -173,13 +169,5 @@ function setRegion(val: IRegion) {
 .highcharts-credits {
   display: none;
 }
-@media (max-width: 768px) {
-  .wrap-svg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    overflow: hidden;
-  }
-}
+
 </style>

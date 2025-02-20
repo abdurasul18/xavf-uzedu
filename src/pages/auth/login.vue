@@ -41,21 +41,27 @@ async function success() {
   <div class="bg-white">
     <div class="grid grid-cols-12 min-h-screen h-full p-4 sm:p-9">
       <div
-        class="col-span-7 h-full bg-no-repeat bg-contain hidden xl:block bg-grey-50 rounded-lg"
-        style="background-image: url('/notebook.png')"
-      ></div>
-      <div class="col-span-12 xl:col-span-5 flex flex-col justify-between relative p-4 md:p-0 rounded-xl bg-gray-50 md:bg-white">
-       
+        class="col-span-7 h-full bg-no-repeat bg-cover hidden xl:block bg-grey-50 rounded-lg overflow-hidden relative"
+        style="background-image: url('/img/bg-2.jpg')"
+      >
+        <div class="flex justify-center items-center text-center absolute inset-0 bg-[#4c4083] bg-opacity-70" >
+          <div class="max-w-[600px] text-5xl font-semibold text-white">
+           <img class="w-[400px]" src="/img/logoWhite.svg" alt=""><br>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-span-12 xl:col-span-5 flex flex-col justify-between relative p-4 md:p-0 rounded-xl bg-gray-50 md:bg-white"
+      >
         <div class="flex flex-col h-full justify-center">
-          <div class="flex justify-center xl:mt-12">
-            <!-- <img class="max-w-[250px]" src="/img/logo2.svg" /> -->
+          <div class="flex justify-center xl:mt-6">
+            <img class=" xl:hidden max-w-[250px] mb-16" src="/img/logo2.svg" />
           </div>
-          <div class="text-center mt-2 2xl:mt-12">
-            <div class="flex justify-center xl:mt-12">
-              <img class="max-w-[300px]" src="/img/logo2.svg" />
-            </div>
+          <div class="text-center mt-2 2xl:mt-6">
+            
+            <div class="text-4xl font-semibold"> Tizimga Kirish </div>
           </div>
-          <div class="w-full sm:w-[435px] mx-auto mt-7 2xl:mt-14">
+          <div class="w-full sm:w-[435px] mx-auto mt-7 2xl:mt-12">
             <div>
               <p class="mb-2">Foydalanuvchi nomi (login)</p>
               <CInput

@@ -246,3 +246,9 @@ export function dateStLocale2(ddmmyyyy: string, locale: 'uz' | 'lt' | 'ru' | 'en
   return `${days} ${monthsNames[month]}, ${year}`
 
 }
+
+export function convertDateFormat(dateStr:string) {
+  if(!dateStr) return '';
+  const [day, month, year] = dateStr.split(".");
+  return `${year}-${month}-${day}`;
+}
