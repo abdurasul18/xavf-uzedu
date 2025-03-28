@@ -13,7 +13,7 @@ async function getList() {
   try {
     let res = await CategoryService.getList();
     list.value = res.data.data;
-    compVal.value = props.value || String(list.value[0].id);
+    compVal.value = props.value || list.value[0].id;
   } finally {
   }
 }
@@ -35,7 +35,7 @@ onMounted(() => {
   </n-tabs> -->
 
   <n-radio-group v-model:value="compVal" name="category" size="medium">
-    <n-radio-button v-for="item in list" :key="item.id" :value="String(item.id)">
+    <n-radio-button v-for="item in list" :key="item.id" :value="item.id">
       {{ item.name }}
     </n-radio-button>
   </n-radio-group>

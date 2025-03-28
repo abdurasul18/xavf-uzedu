@@ -6,6 +6,11 @@ import { IResponse, QueryType } from "./types"
 import { ICriterion } from "./criterion"
 import { IUser } from "./user"
 
+export const EQUAL_TO_LICENSE_KATEGORY = {
+    428: 4,
+    4413: 2,
+    4412: 3,
+}
 export interface IOrganization {
     address: string
     director_contact: string
@@ -66,9 +71,9 @@ export interface IOrgByInn {
     status: string
     tin: string
     type: 2
-    activity_addresses: { address: string }[]
+    activity_addresses: { address: string, region_id: string, sub_region_id: string }[]
     activity_types: { id: string, name_en: string, name_ru: string, name_uz: string }[]
-    organization:{
+    organization: {
         name_en: string
         name_ru: string
         name_uz: string

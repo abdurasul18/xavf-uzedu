@@ -6,8 +6,8 @@ import { confirmDelete } from "/@src/composable/helpers";
 import { toastSuccess } from "/@src/plugins/toast";
 const modal = useModal();
 const route = useRoute();
-let category_id = ref(String(route.query.category_id || ""));
-let name = ref(String(route.query.name || ""));
+let category_id = ref(Number(route.query.category_id || "")||"");
+let title = ref(String(route.query.title || ""));
 let inn = ref(String(route.query.inn || ""));
 let region_id = ref(Number(route.query.region_id || "") || null);
 let district_id = ref(Number(route.query.district_id || "") || null);
@@ -16,7 +16,7 @@ let paramsAdd = computed(() => {
   return {
     query: {
       category_id: category_id.value,
-      name: name.value,
+      title: title.value,
       inn: inn.value,
       region_id: region_id.value,
       district_id: district_id.value,
@@ -61,7 +61,7 @@ function getStatusRate(rate: number) {
     <AppTitle> Tashkilotlar </AppTitle>
 
     <div class="flex flex-col md:flex-row justify-between gap-4 pt-1">
-      <CategoryTab v-model:value="category_id" size="large" class="pt-1" />
+      <CategoryTab v-model:value="category_id"  size="large" class="pt-1" />
       <CButton
         @click="$router.push(`/organization/add?category_id=${category_id}`)"
         icon="plus"
@@ -69,7 +69,7 @@ function getStatusRate(rate: number) {
       >
     </div>
     <div class="grid md:grid-cols-4 mt-2 gap-4">
-      <CInput v-model:value="name" placeholder="Nomi" />
+      <CInput v-model:value="title" placeholder="Nomi" />
       <CInput v-model:value="inn" placeholder="INN" />
       <SelectRegion v-model:value="region_id" placeholder="Viloyat" />
       <SelectDistrict

@@ -35,6 +35,7 @@ declare module 'vue' {
     FileShow: typeof import('./src/components/main/FileShow.vue')['default']
     FroalaEditor: typeof import('./src/components/main/FroalaEditor.vue')['default']
     GenerateProtocol: typeof import('./src/components/generate/GenerateProtocol.vue')['default']
+    HideText: typeof import('./src/components/ui/HideText.vue')['default']
     ProfileMenu: typeof import('./src/components/header-footer/ProfileMenu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

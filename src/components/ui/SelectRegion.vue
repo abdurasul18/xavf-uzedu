@@ -3,6 +3,7 @@ import { RegionService } from "../../services/region";
 let props = defineProps<{
   schema?: any;
 }>();
+let emits=defineEmits(["update:list"]);
 let loading = ref(false);
 let list = ref([]);
 async function getList() {
@@ -10,6 +11,7 @@ async function getList() {
     loading.value = true;
     let res = await RegionService.getRegions();
     list.value = res.data.data;
+    emits('update:list', list.value);
   } finally {
     loading.value = false;
   }

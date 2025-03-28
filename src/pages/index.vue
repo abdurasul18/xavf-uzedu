@@ -18,7 +18,7 @@ let width = ref(window.innerWidth);
       class="content-wrapper col-span-12 2xl:col-span-9 h-screen flex flex-col justify-between"
     >
       <div class="flex justify-between items-center p-7">
-        <div v-if="width > 768" class="text-3xl" id="appTitle"></div>
+        <div v-if="width > 768" class="text-3xl max-w-[80%] one-line" style="line-height: 1;" id="appTitle"></div>
         <div v-else></div>
         <div class="flex justify-end gap-4">
           <div class="flex justify-end items-center shrink-0">

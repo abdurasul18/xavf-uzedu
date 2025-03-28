@@ -19,6 +19,9 @@ const AuthService = {
   getChallenge(): Promise<AxiosResponse<{ challenge: string }>> {
     return axios.get(`${import.meta.env.VITE_API_API_URL}/account/eimzo-challenge/`)
   },
+  loginOneID(data:any){
+    return ApiService.post(`user/login-by-one-id`, data)
+  }
 
 }
 

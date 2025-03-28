@@ -83,7 +83,9 @@ const roleOptions = [
               <tr v-for="(item, index) in list">
                 <td>{{ $paginate(index, page, per_page) }}</td>
                 <td>{{ item.username }}</td>
-                <td>{{ item.last_name }} {{ item.first_name }} {{ item.middle_name }}</td>
+                <td>{{ item.last_name }} {{ item.first_name }} {{ item.middle_name }}
+                  <div v-if="item.pin"> <HideText :text="item.pin"/> </div>
+                </td>
                 <td>
                   <n-tag round>
                     {{

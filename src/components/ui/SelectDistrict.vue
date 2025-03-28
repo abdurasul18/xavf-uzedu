@@ -4,6 +4,7 @@ let props = defineProps<{
   schema?: any;
   regionId: any;
 }>();
+let emits = defineEmits(["update:list"]);
 let loading = ref(false);
 let list = ref([]);
 watch(() => props.regionId, getList);
@@ -13,6 +14,7 @@ async function getList() {
     loading.value = true;
     let res = await RegionService.getDistricts(props.regionId);
     list.value = res.data.data;
+    emits("update:list", list.value);
   } finally {
     loading.value = false;
   }

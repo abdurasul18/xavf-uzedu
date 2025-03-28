@@ -3,8 +3,13 @@ import { useVuelidate } from "@vuelidate/core";
 import { minLength, required } from "@vuelidate/validators";
 import { useToast } from "vue-toast-notification";
 import * as _ from "lodash";
-import { IOrgByInn, OrganizationService } from "/@src/services/organization";
+import {
+  EQUAL_TO_LICENSE_KATEGORY,
+  IOrgByInn,
+  OrganizationService,
+} from "/@src/services/organization";
 import { convertDateFormat } from "/@src/utils/date";
+import { RegionService } from "/@src/services/region";
 let props = defineProps<{
   id?: string;
   mode: "create" | "update";
@@ -39,12 +44,13 @@ let form = ref({
   license_date: "",
   inn: "",
   address: "",
-  category_id: String(route.query.category_id || ""),
+  category_id: Number(route.query.category_id || "") || "",
   region_id: "",
   district_id: "",
   direction_contact: "",
   direction_fio: "",
   organization_addresses: [{ name: "" }],
+  pin: "",
 });
 
 const rules = {
@@ -54,7 +60,7 @@ const rules = {
   address: { required },
   category_id: { required },
   region_id: { required },
-  district_id: { required },
+  district_id: {  },
   direction_contact: {},
   direction_fio: {},
   inn: { required, minLength: minLength(9) },
@@ -109,12 +115,35 @@ async function getData() {
     dataLoading.value = false;
   }
 }
-function setData(item: IOrgByInn) {
+const regions = ref<any[]>([]);
+const districts = ref<any[]>([]);
+async function setData(item: IOrgByInn) {
   form.value.title = item.name;
   form.value.address = item.activity_addresses[0].address;
-  form.value.license_date = convertDateFormat(item.registration_date)
+  form.value.license_date = convertDateFormat(item.registration_date);
   form.value.license_number = item.register_number;
-  form.value.organization_addresses = item.activity_addresses.map((i) => ({ name: i.address }));
+  form.value.pin = item.pin;
+  form.value.organization_addresses = item.activity_addresses.map((i) => ({
+    name: i.address,
+  }));
+  if ((EQUAL_TO_LICENSE_KATEGORY as any)[item.activity_types?.[0]?.id]) {
+    form.value.category_id = (EQUAL_TO_LICENSE_KATEGORY as any)[
+      item.activity_types?.[0]?.id
+    ];
+  }
+  let region = item.activity_addresses?.[0];
+  if (region) {
+    form.value.region_id = regions.value.find((el) => el.soato == region.region_id)?.id || "";
+    if(form.value.region_id){
+      let res = await RegionService.getDistricts(form.value.region_id);
+      districts.value = res.data.data;
+      form.value.district_id = districts.value.find(
+      (el) => el.soato == region.sub_region_id
+    )?.id || "";
+    }
+   
+  }
+
   show.value = false;
 }
 //
@@ -126,9 +155,6 @@ function setData(item: IOrgByInn) {
     </div>
     <div class="pb-7 border-b border-secondary">
       <div class="grid md:grid-cols-3 mt-3 gap-5">
-        <div class="col-span-full">
-          <CategoryTab v-model:value="form.category_id" />
-        </div>
         <div>
           <div class="mb-2 text-sm">INN <span class="text-danger">*</span></div>
           <div class="flex gap-2">
@@ -146,7 +172,9 @@ function setData(item: IOrgByInn) {
                 <n-list hoverable clickable class="max-w-[300px] md:max-w-[500px]">
                   <n-list-item @click="setData(item)" v-for="item in data">
                     <div class="font-semibold">{{ item.name }}</div>
-                    <div class="text-sm"> {{ item.activity_types?.map?.(el=>el.name_uz).join(", ") }} </div>
+                    <div class="text-sm">
+                      {{ item.activity_types?.map?.((el) => el.name_uz).join(", ") }}
+                    </div>
                   </n-list-item>
                 </n-list>
               </n-scrollbar>
@@ -155,7 +183,9 @@ function setData(item: IOrgByInn) {
             <CIconButton icon="info" @click="getData()" :loading="dataLoading" />
           </div>
         </div>
-
+        <div class="col-span-full">
+          <CategoryTab v-model:value="form.category_id" />
+        </div>
         <div>
           <div class="mb-2 text-sm">
             Tashkilot nomi <span class="text-danger">*</span>
@@ -187,11 +217,16 @@ function setData(item: IOrgByInn) {
           <div class="mb-2 text-sm">
             {{ $t("field.region") }} <span class="text-danger">*</span>
           </div>
-          <SelectRegion v-model:value="form.region_id" :schema="v$.region_id" />
+          <SelectRegion
+            v-model:value="form.region_id"
+            :schema="v$.region_id"
+            @update:list="regions = $event"
+          />
         </div>
         <div>
           <div class="mb-2 text-sm">
-            {{ $t("field.district") }} <span class="text-danger">*</span>
+            {{ $t("field.district") }} 
+            <span class="text-danger">*</span>
           </div>
           <SelectDistrict
             :regionId="form.region_id"
@@ -217,6 +252,14 @@ function setData(item: IOrgByInn) {
             :schema="v$.direction_contact"
             placeholder=""
             v-model:value="form.direction_contact"
+          />
+        </div>
+        <div>
+          <div class="mb-2 text-sm">PINFL</div>
+          <CInput
+            :schema="v$.pin"
+            placeholder=""
+            v-model:value="form.pin"
           />
         </div>
         <div class="">

@@ -5,7 +5,7 @@ import { CategoryService, ICategory } from "/@src/services/category";
 import { confirmDelete } from "/@src/composable/helpers";
 import { toastSuccess } from "/@src/plugins/toast";
 const modal = useModal();
-const { loading, list, fetchData, search, page, per_page } = useApiService<ICategory>(
+const { loading, list, fetchData,  page, per_page } = useApiService<ICategory>(
   CategoryService.getList
 );
 onMounted(fetchData);
@@ -22,6 +22,12 @@ async function deleteItem(item: ICategory) {
     toastSuccess();
   }
 }
+let search = ref("");
+let filteredList = computed(() => {
+  return list.value.filter((item) => {
+    return item.name.toLowerCase().includes(search.value.toLowerCase());
+  });
+});
 </script>
 <template>
   <div>
@@ -52,8 +58,8 @@ async function deleteItem(item: ICategory) {
               <th class="w-[120px]">Amallar</th>
             </tr>
           </thead>
-          <tbody v-if="list.length">
-            <tr v-for="(item, index) in list">
+          <tbody v-if="filteredList.length">
+            <tr v-for="(item, index) in filteredList">
               <td>{{ $paginate(index, page, per_page) }}</td>
               <td>{{ item.name }}</td>
               <td>

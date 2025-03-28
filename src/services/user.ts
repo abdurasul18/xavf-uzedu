@@ -13,6 +13,7 @@ export interface IUser {
     token:string
     username:string
     region:IRegion
+    pin:string
 }
 
 export const UserService = {

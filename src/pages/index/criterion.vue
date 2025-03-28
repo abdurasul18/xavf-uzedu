@@ -20,7 +20,6 @@ const {
   loading,
   list,
   fetchData,
-  search,
   page,
   per_page,
   total,
@@ -38,6 +37,15 @@ async function deleteItem(item: ICriterion) {
     toastSuccess();
   }
 }
+let search = ref("");
+let filteredList = computed(() => {
+  return list.value.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(search.value.toLowerCase()) ||
+      item.category?.name.toLowerCase().includes(search.value.toLowerCase())
+    );
+  });
+});
 </script>
 <template>
   <div>
@@ -73,8 +81,8 @@ async function deleteItem(item: ICriterion) {
               <th class="w-[120px]">Amallar</th>
             </tr>
           </thead>
-          <tbody v-if="list.length">
-            <tr v-for="(item, index) in list">
+          <tbody v-if="filteredList.length">
+            <tr v-for="(item, index) in filteredList">
               <td>{{ $paginate(index, page, per_page) }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.rate }}</td>

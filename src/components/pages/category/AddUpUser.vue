@@ -26,6 +26,7 @@ let form = ref({
   username: "",
   password: "",
   password_confirm: "",
+  pin : "",
   role: 300 as 100 | 200 | 300, // 100 = Republic , 300 = Region ,100 = Admin
   first_name: "",
   last_name: "",
@@ -40,6 +41,7 @@ const rules = computed(() => {
     first_name: { required },
     last_name: { required },
     middle_name: {  },
+    pin: {  },
     password_confirm: { check: (value: string) => value == form.value.password },
     region_id: { required: form.value.role == 300 ? required : false }, // required if Role == Region
   };
@@ -90,6 +92,10 @@ const roleOptions = [
       <div>
         <p class="mb-2">Otasining ismi</p>
         <CInput v-model:value="form.middle_name" :schema="v$.middle_name" />
+      </div>
+      <div>
+        <p class="mb-2">PINFL</p>
+        <CInput v-model:value="form.pin" :schema="v$.pin" />
       </div>
       <div>
         <p class="mb-2">Roli</p>

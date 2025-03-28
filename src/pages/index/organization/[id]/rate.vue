@@ -21,9 +21,7 @@ async function getData() {
     loading.value = false;
   }
 }
-onMounted(() => {
-  getData();
-});
+
 let crLoading = ref(false);
 let crList = ref<ICriterion[]>([]);
 async function getCrList() {
@@ -39,7 +37,8 @@ async function getCrList() {
     crLoading.value = false;
   }
 }
-onMounted(() => {
+onMounted(async () => {
+  await getData();
   getCrList();
 });
 //
@@ -133,20 +132,20 @@ let total = computed(() => {
         </n-checkbox-group>
         <n-list hoverable v-else>
           <n-list-item v-for="item in crList">
-            <div class="flex gap-2">
+            <div class="flex gap-4 items-start">
               <template
                 v-if="
                   data?.organizationCriterions?.some((el) => el?.criterion?.id == item.id)
                 "
               >
-                <CIcon name="check" class="error-svg" />
-                <div class="text-error">{{ item.name }} - ({{ item.rate }})</div>
+                <CIcon style="flex-shrink: 0;" name="check" class="error-svg" />
+                <div class="text-error">{{ item.name }} - <strong>({{ item.rate }})</strong></div>
               </template>
 
               <template v-else>
-                <CIcon name="minus" />
+                <CIcon style="flex-shrink: 0;" name="minus" />
 
-                <div>{{ item.name }} - ({{ item.rate }})</div>
+                <div>{{ item.name }} - <strong>({{ item.rate }})</strong></div>
               </template>
             </div>
           </n-list-item>
