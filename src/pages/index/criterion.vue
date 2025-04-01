@@ -1,3 +1,7 @@
+<route lang="yaml">
+  meta:
+    roles: [100]
+</route>
 <script lang="ts" setup>
 import { useModal } from "naive-ui";
 import { useApiService } from "/@src/composable/getList";

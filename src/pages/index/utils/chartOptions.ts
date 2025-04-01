@@ -112,12 +112,11 @@ export function generateHighChartPieOpt(title: string, seriesData: { name: strin
           if (!customLabel) {
             customLabel = chart.options.chart.custom.label =
               chart.renderer.label(
-                `Jami: ` +
-                `<strong>${seriesData.map((el: any) => el.y).reduce((a: any, b: any) => a + b, 0)}</strong>`
+               '<span style="font-size:16px">'+`Jami:` + `<strong >${seriesData.map((el: any) => el.y).reduce((a: any, b: any) => a + b, 0)}</strong>` + '</span>'
               )
                 .css({
                   color: '#000',
-                  fontSize: '14px',
+                  fontSize: '10px',
                   textAnchor: 'middle'
                 })
                 .add();
@@ -157,7 +156,10 @@ export function generateHighChartPieOpt(title: string, seriesData: { name: strin
         dataLabels: {
           enabled: false
         },
-        showInLegend: true
+        showInLegend: true,
+        tooltip: {
+          pointFormat: '{point.y}'
+        }
       }
     },
     legend: {
