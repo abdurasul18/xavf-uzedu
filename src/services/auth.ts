@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import ApiService, { createQuery } from "./api"
 import { IUser } from "./user";
+
 export interface IUserLogin extends IUser {
  
 
@@ -21,6 +22,9 @@ const AuthService = {
   },
   loginOneID(data:any){
     return ApiService.post(`user/login-by-one-id`, data)
+  },
+  logout(){
+    return ApiService.post(`user/logout`, {})
   }
 
 }

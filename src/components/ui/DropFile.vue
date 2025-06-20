@@ -6,7 +6,7 @@ let props = withDefaults(
     accept?: string;
   }>(),
   {
-    accept: ".jpg, .jpeg, .png, .pdf",
+    accept: ".doc, .docx, .pdf",
   }
 );
 let emits = defineEmits(["update:value"]);

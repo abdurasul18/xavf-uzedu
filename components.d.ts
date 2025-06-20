@@ -18,6 +18,7 @@ declare module 'vue' {
     AppNotFound: typeof import('./src/components/ui/AppNotFound.vue')['default']
     AppTitle: typeof import('./src/components/ui/AppTitle.vue')['default']
     CActionIcon: typeof import('./src/components/ui/CActionIcon.vue')['default']
+    Captcha: typeof import('./src/components/Captcha.vue')['default']
     CategoryTab: typeof import('./src/components/pages/category/CategoryTab.vue')['default']
     CButton: typeof import('./src/components/ui/CButton.vue')['default']
     CDatepicker: typeof import('./src/components/ui/CDatepicker.vue')['default']

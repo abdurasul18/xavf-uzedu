@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { AccountService } from '../services/account'
-import { IUserLogin } from '../services/auth'
+import { AuthService, IUserLogin } from '../services/auth'
 
 export const useAuthStore = defineStore('auth', () => {
     const user = useStorage('user_data', {}) as Ref<IUserLogin | undefined>
@@ -11,10 +11,17 @@ export const useAuthStore = defineStore('auth', () => {
         token.value = data.token
         user.value = data
     }
-    const logout = () => {
-        user.value = undefined
-        token.value = ""
-        user.value = undefined
+    const logout = async () => {
+        try {
+            await AuthService.logout()
+            user.value = undefined
+            token.value = ""
+            user.value = undefined
+        }
+        finally {
+
+        }
+
     }
     async function getUser() {
         try {

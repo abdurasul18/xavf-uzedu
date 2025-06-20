@@ -3,9 +3,15 @@ import { useAuthStore } from "../../store/auth";
 const { logout } = useAuthStore();
 const { user } = toRefs(useAuthStore());
 const router = useRouter();
-function signOut() {
-  logout();
-  router.push("/auth/login");
+let logoutLoading  = ref(false)
+async function signOut() {
+  try {
+    logoutLoading.value = true;
+    await logout();
+    await router.push("/auth/login");
+  } finally {
+    logoutLoading.value = false;
+  }
 }
 </script>
 <template>
@@ -28,7 +34,7 @@ function signOut() {
           to="/category"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-         <CIcon class="mr-4" name="category"/>
+          <CIcon class="mr-4" name="category" />
           <span>Ta'lim tashkilotlari turi</span>
         </RouterLink>
       </li>
@@ -37,26 +43,26 @@ function signOut() {
           to="/criterion"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-        <CIcon class="mr-4" name="check"/>
+          <CIcon class="mr-4" name="check" />
           <span>Kriteriyalar</span>
         </RouterLink>
       </li>
-      <li >
+      <li>
         <RouterLink
           to="/organization"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-        <CIcon class="mr-4" name="department"/>
+          <CIcon class="mr-4" name="department" />
           <span>Ta'lim tashkilotlari</span>
         </RouterLink>
       </li>
 
-      <li v-if="user?.role === 100"> 
+      <li v-if="user?.role === 100">
         <RouterLink
           to="/user"
           class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-1"
         >
-        <CIcon class="mr-4" name="users"/>
+          <CIcon class="mr-4" name="users" />
           <span>Foydalanuvchilar</span>
         </RouterLink>
       </li>
@@ -74,6 +80,7 @@ function signOut() {
   <a
     href="javascript:void(0)"
     @click="signOut"
+    :disabled="logoutLoading"
     class="flex items-center px-4 py-[10px] rounded-2xl hover:bg-secondary mb-4"
   >
     <img class="mr-4" src="/img/svg/logout.svg" alt="" />

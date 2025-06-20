@@ -23,10 +23,10 @@ async function validate() {
   return await v$.value.$validate();
 }
 async function success() {
-  if (!(await validate())) return;
+  if (!(await validate()) || !isSuccessCaptcha.value) return;
   try {
     loading.value = true;
-    let res = await AuthService.login(form.value);
+    let res = await AuthService.login({...form.value, captchaToken: captchaToken.value});
     login(res.data.data);
     ApiService.setHeader();
     await router.push("/dashboard");
@@ -45,6 +45,12 @@ function openOneId() {
     "_self",
     "One Id"
   );
+}
+let isSuccessCaptcha = ref(false);
+let captchaToken = ref("");
+function onCaptchaSuccess(e: any) {
+  captchaToken.value = e;
+  isSuccessCaptcha.value = true;
 }
 </script>
 <template>
@@ -99,10 +105,17 @@ function openOneId() {
               >
               </CInput>
             </div>
-            <CButton @click="success" :loading="loading" class="mt-5 w-full"
+            <div>
+              <Captcha @verified="onCaptchaSuccess" />
+            </div>
+            <CButton
+              :disabled="!isSuccessCaptcha"
+              @click="success"
+              :loading="loading"
+              class="mt-5 w-full"
               >Kirish</CButton
             >
-            <div class="grid grid-cols-12 w-full my-3  items-center">
+            <div class="grid grid-cols-12 w-full my-3 items-center">
               <div class="col-span-5 border-t border-grey-200"></div>
               <div class="col-span-2 flex justify-center">ИЛИ</div>
               <div class="col-span-5 border-t border-grey-200"></div>

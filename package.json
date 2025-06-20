@@ -24,6 +24,7 @@
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.4.0",
     "vue-toast-notification": "^3.1.2",
+    "vue3-recaptcha-v2": "^2.1.0",
     "vue3-apexcharts": "1.4.1"
   },
   "devDependencies": {

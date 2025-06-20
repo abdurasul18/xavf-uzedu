@@ -10,6 +10,8 @@ import globalMethods from './globals/index'
 import { createPinia } from 'pinia'
 import { useAuthStore } from './store/auth'
 import ApiService from './services/api'
+import { install } from "vue3-recaptcha-v2";
+
 const pinia = createPinia()
 const app = createApp(App)
 app.use(Maska)
@@ -19,6 +21,10 @@ app
     .use(naive)
     .use(i18n)
     .use(pinia)
+     .use(install, {
+        sitekey: import.meta.env.VITE_RECAPTCHA_SITE_KEY, // Your reCAPTCHA site key
+        cnDomains: false, // Optional, If you use in China, set this value true
+    })
     .mount('#app')
 
 
